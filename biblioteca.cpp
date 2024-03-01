@@ -12,13 +12,14 @@ struct Livro {
         getline(cin, tituloLivro);
         cout << "Digite o autor do livro: ";
         getline(cin, autor);
-        cout << "Digite o número de páginas do livro: ";
+        cout << "Digite o numero de paginas do livro: ";
         cin >> numeroPagina;
+        cout << "----------------------------------------" << endl;
         cin.ignore();
     };
 
     void imprimirLivro() {
-        cout << tituloLivro << endl << autor << endl << numeroPagina << endl;
+        cout << "Titulo: " << tituloLivro << endl << "Autor: " << autor << endl << "Numero de pagina: " << numeroPagina << endl;
     };
 };
 
@@ -31,6 +32,7 @@ struct Biblioteca {
         do {
             cout << "Quantos livros você deseja cadastrar? (Máximo 10) : ";
             cin >> quantidadeLivros;
+            cout << "--------------------------------------------------" << endl;
         } while (quantidadeLivros < 0 || quantidadeLivros > 10);
 
         cin.ignore();
@@ -44,16 +46,20 @@ struct Biblioteca {
     };
 
     void imprimirBiblioteca() {
+        cout << "|          Livros Cadastrados          |" << endl;
+        cout << "----------------------------------------" << endl;
         for (int i = 0; i < quantidadeLivros; i++) {
-            cout << "Livro " << i + 1 << ": ";
+            cout << "Livro " << i + 1 << endl;
             livros[i].imprimirLivro();
             cout << endl;
         }
 
-            cout << "Livro com maior número de páginas:" << endl;
-            cout << "Titulo: " << livros[indiceMaiorPagina].tituloLivro << endl;
-            cout << "Autor: " << livros[indiceMaiorPagina].autor << endl;
-            cout << "Numero de paginas: " << livros[indiceMaiorPagina].numeroPagina << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "|  Livro com maior número de páginas   |" << endl;
+        cout << "----------------------------------------" << endl;
+        cout << "Titulo: " << livros[indiceMaiorPagina].tituloLivro << endl;
+        cout << "Autor: " << livros[indiceMaiorPagina].autor << endl;
+        cout << "Numero de paginas: " << livros[indiceMaiorPagina].numeroPagina << endl;
     };
 };
 
