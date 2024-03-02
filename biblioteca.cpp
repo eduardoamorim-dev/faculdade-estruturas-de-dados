@@ -8,7 +8,7 @@ struct Livro {
     int numeroPagina = 0;
 
     void lerLivro() {
-        cout << "Digite o título do livro: ";
+        cout << "Digite o titulo do livro: ";
         getline(cin, tituloLivro);
         cout << "Digite o autor do livro: ";
         getline(cin, autor);
@@ -30,10 +30,10 @@ struct Biblioteca {
 
     void lerBiblioteca() {
         do {
-            cout << "Quantos livros você deseja cadastrar? (Máximo 10) : ";
+            cout << "Quantos livros voce deseja cadastrar? (Maximo 10) : ";
             cin >> quantidadeLivros;
             cout << "--------------------------------------------------" << endl;
-        } while (quantidadeLivros < 0 || quantidadeLivros > 10);
+        } while (quantidadeLivros <= 0 || quantidadeLivros > 10);
 
         cin.ignore();
 
@@ -55,7 +55,7 @@ struct Biblioteca {
         }
 
         cout << "----------------------------------------" << endl;
-        cout << "|  Livro com maior número de páginas   |" << endl;
+        cout << "|  Livro com maior numero de paginas   |" << endl;
         cout << "----------------------------------------" << endl;
         cout << "Titulo: " << livros[indiceMaiorPagina].tituloLivro << endl;
         cout << "Autor: " << livros[indiceMaiorPagina].autor << endl;
