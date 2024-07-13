@@ -1,69 +1,130 @@
 #include <iostream>
 
-// Definição da estrutura do nó da lista
+using namespace std;
+
+// Definição da estrutura do nó
 struct No {
-    int dado;        // Dado armazenado no nó
-    No* proximo;     // Ponteiro para o próximo nó na lista
+    int valor;   // Armazena um valor inteiro
+    No* prox;    // Aponta para o próximo nó na lista
+
+    // Construtor padrão, inicializa o ponteiro prox como NULL
+    No() {
+        prox = NULL;
+    }
+
+    // Construtor que inicializa o valor e define prox como NULL
+    No(int _valor) {
+        valor = _valor;
+        prox = NULL;
+    }
 };
 
-// Função para inserir um elemento no início da lista
-void inserirNoInicio(No*& cabeca, int novoDado) {
-    No* novoNo = new No();      // Cria um novo nó
-    novoNo->dado = novoDado;    // Atribui o dado ao novo nó
-    novoNo->proximo = cabeca;   // O próximo do novo nó aponta para o antigo cabeça
-    cabeca = novoNo;            // Atualiza o cabeça para apontar para o novo nó
-}
+// Definição da estrutura da lista
+struct Lista {
+    No* inicio;   // Aponta para o primeiro nó da lista
+    No* fim;      // Aponta para o último nó da lista
+    int n;        // Armazena a quantidade de elementos na lista
 
-// Função para imprimir os elementos da lista
-void imprimirLista(No* cabeca) {
-    No* atual = cabeca;         // Começa do cabeça
-    std::cout << "Elementos da lista: ";
-    while (atual != nullptr) {  // Enquanto não chegar ao fim da lista
-        std::cout << atual->dado << " ";  // Imprime o dado do nó atual
-        atual = atual->proximo;  // Move para o próximo nó
+    // Construtor que inicializa a lista como vazia
+    Lista() {
+        inicio = NULL;
+        fim = NULL;
+        n = 0;
     }
-    std::cout << std::endl;
-}
 
-// Função para remover o primeiro elemento da lista
-void removerPrimeiro(No*& cabeca) {
-    if (cabeca == nullptr) return;  // Se a lista estiver vazia, retorna
-
-    No* temp = cabeca;              // Guarda o nó atual
-    cabeca = cabeca->proximo;       // Move o cabeça para o próximo nó
-    delete temp;                    // Deleta o nó original
-}
-
-// Função para liberar a memória alocada pela lista
-void deletarLista(No*& cabeca) {
-    No* atual = cabeca;
-    while (atual != nullptr) {
-        No* proximo = atual->proximo; // Guarda o próximo nó
-        delete atual;                 // Deleta o nó atual
-        atual = proximo;              // Move para o próximo nó
+    // Função para inserir um nó no início da lista
+    void inserirInicio(int valor) {
+        No* novo = new No(valor); // Cria um novo nó com o valor
+        if (inicio == NULL) {
+            // Se a lista está vazia, início e fim são o novo nó
+            inicio = novo;
+            fim = novo;
+        } else {
+            // Aponta para o antigo início e atualiza o início para o novo nó
+            novo->prox = inicio;
+            inicio = novo;
+        }
+        n++; // Incrementa a contagem de nós
     }
-    cabeca = nullptr;                 // Define o cabeça como nulo (lista vazia)
-}
 
+    // Função para inserir um nó no final da lista
+    void inserirFinal(int valor) {
+        No* novo = new No(valor); // Cria um novo nó com o valor
+        if (inicio == NULL) {
+            // Se a lista está vazia, início e fim são o novo nó
+            inicio = novo;
+            fim = novo;
+        } else {
+            // O antigo fim aponta para o novo nó e atualiza o fim para o novo nó
+            fim->prox = novo;
+            fim = novo;
+        }
+        n++; // Incrementa a contagem de nós
+    }
+
+    // Função para remover o nó do início da lista
+    void removerInicio() {
+        if (n == 0) return; // Se a lista está vazia, não faz nada
+        if (n == 1) {
+            // Se há apenas um nó, remove ele e define início e fim como NULL
+            delete inicio;
+            inicio = NULL;
+            fim = NULL;
+            n--;
+            return;
+        }
+        // Guarda o nó atual do início, atualiza o início para o próximo nó e remove o antigo início
+        No* aux = inicio;
+        inicio = inicio->prox;
+        delete aux;
+        n--; // Decrementa a contagem de nós
+    }
+
+    // Função para remover o nó do final da lista
+    void removerFinal() {
+        if (n == 0) return; // Se a lista está vazia, não faz nada
+        if (n == 1) {
+            // Se há apenas um nó, remove ele e define início e fim como NULL
+            delete inicio;
+            inicio = NULL;
+            fim = NULL;
+            n--;
+            return;
+        }
+        // Encontra o penúltimo nó, remove o último nó e atualiza o fim para o penúltimo nó
+        No* aux = inicio;
+        while (aux->prox != fim) {
+            aux = aux->prox;
+        }
+        delete fim;
+        fim = aux;
+        aux->prox = NULL;
+        n--; // Decrementa a contagem de nós
+    }
+
+    // Função para imprimir todos os valores da lista
+    void imprimir() {
+        No* aux = inicio; // Começa no início da lista
+        while (aux != NULL) {
+            printf("%d\n", aux->valor); // Imprime o valor do nó atual
+            aux = aux->prox;            // Vai para o próximo nó
+        }
+    }
+};
+
+// Função principal
 int main() {
-    No* cabeca = nullptr;           // Lista vazia no início
+    
+    Lista l; // Cria uma nova lista
 
-    // Inserindo elementos na lista
-    inserirNoInicio(cabeca, 10);
-    inserirNoInicio(cabeca, 20);
-    inserirNoInicio(cabeca, 5);
+    // Insere alguns valores na lista
+    l.inserirInicio(10); // Insere o valor 10 no início
+    l.inserirInicio(5);  // Insere o valor 5 no início
+    
+    l.inserirFinal(7);   // Insere o valor 7 no final
+    l.inserirFinal(3);   // Insere o valor 3 no final
 
-    // Imprimindo os elementos da lista
-    imprimirLista(cabeca);
+    l.imprimir(); // Imprime todos os valores da lista
 
-    // Removendo o primeiro elemento da lista
-    removerPrimeiro(cabeca);
-
-    // Imprimindo os elementos da lista após a remoção
-    imprimirLista(cabeca);
-
-    // Liberando a memória alocada pela lista
-    deletarLista(cabeca);
-
-    return 0;
+    return 0; // Indica que o programa terminou com sucesso
 }
