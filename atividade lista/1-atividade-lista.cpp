@@ -1,3 +1,5 @@
+// 1. Criar um método que recebe um número N e remove os N últimos elementos da lista. Caso o tamanho da lista seja menor que N, esvaziar a lista.
+
 #include <iostream>
 
 using namespace std;
