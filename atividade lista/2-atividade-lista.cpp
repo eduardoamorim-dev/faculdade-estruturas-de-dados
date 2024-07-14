@@ -1,3 +1,5 @@
+// 2. Crie um método que remove o segundo elemento da lista. Se a lista tiver tamanho <= 1, seu método não deve fazer nada.
+
 #include <iostream>
 
 using namespace std;
